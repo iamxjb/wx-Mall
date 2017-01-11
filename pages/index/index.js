@@ -1,26 +1,63 @@
-//index.js
-//获取应用实例
-var app = getApp()
+const App = getApp();
+const api = require('../../utils/api.js');
+const util = require('../../utils/util.js');
+
+const formatTime = util.formatTime;
+
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {}
+    trips: [],
+    start: 0,
+    loading: false,
+    windowWidth: App.systemInfo.windowWidth,
+    windowHeight: App.systemInfo.windowHeight,
   },
-  //事件处理函数
-  bindViewTap: function() {
+  onLoad() {
+    this.loadMore();
+  },
+  onPullDownRefresh() {
+    this.loadMore(null, true);
+  },
+  loadMore(e, needRefresh) {
+    const self = this;
+    const loading = self.data.loading;
+    const data = {
+      next_start: self.data.start,
+    };
+    if (loading) {
+      return;
+    }
+    self.setData({
+      loading: true,
+    });
+    api.trip.hot(data, (state, res) => {
+      if (state === 'success') {
+        let newList = res.data.data.elements;
+        newList.map((trip) => {
+          const item = trip;
+          item.data[0].date_added = formatTime(new Date(item.data[0].date_added * 1000), 1);
+          return item;
+        });
+        if (needRefresh) {
+          wx.stopPullDownRefresh();
+        } else {
+          newList = self.data.trips.concat(newList);
+        }
+        self.setData({
+          trips: newList,
+        });
+        const nextStart = res.data.data.next_start;
+        self.setData({
+          start: nextStart,
+          loading: false,
+        });
+      }
+    });
+  },
+  viewTrip(e) {
+    const ds = e.currentTarget.dataset;
     wx.navigateTo({
-      url: '../logs/logs'
-    })
+      url: `../trip/trip?id=${ds.id}&name=${ds.name}`,
+    });
   },
-  onLoad: function () {
-    console.log('onLoad')
-    var that = this
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
-    })
-  }
-})
+});

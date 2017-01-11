@@ -1,12 +1,34 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/explore/explore",
+    "pages/destination/destination",
+    "pages/waypoint/waypoint",
+    "pages/user/user",
+    "pages/trip/trip"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
-  }
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#4abdcc",
+    "navigationBarTitleText": "跨时空",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#b0b0b0",
+    "selectedColor": "#4abdcc",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [{
+      "pagePath": "pages/index/index",
+      "iconPath": "images/index_normal.png",
+      "selectedIconPath": "images/index_pressed.png",
+      "text": "推荐"
+    }, {
+      "pagePath": "pages/explore/explore",
+      "iconPath": "images/explore_normal.png",
+      "selectedIconPath": "images/explore_pressed.png",
+      "text": "发现"
+    }]
+  },
+  "debug": true
 }

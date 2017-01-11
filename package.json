@@ -1,0 +1,17 @@
+{
+  "name": "weapp-demo-breadtrip",
+  "version": "0.0.1",
+  "description": "跨时空",
+  "main": "app.js",
+  "scripts": {
+    "lint": "eslint"
+  },
+  "keywords": ["breadtrip", "weapp"],
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-plugin-import": "^2.0.1"
+  }
+}
